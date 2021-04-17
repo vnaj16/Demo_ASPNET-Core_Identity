@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Demo_ASPNET_Core_Identity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace Demo_ASPNET_Core_Identity.Data
             : base(options)
         {
         }
+
+        public DbSet<Alumno> Alumnos { get; set; }
     }
 }
