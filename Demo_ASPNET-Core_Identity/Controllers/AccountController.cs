@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Demo_ASPNET_Core_Identity.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        public LoginController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
         }
-        public async Task<IActionResult> Index(string returnUrl = null)
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -90,6 +90,11 @@ namespace Demo_ASPNET_Core_Identity.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
+
+        public async Task<IActionResult> AccessDenied(string returnUrl = null)
+        {
+            return View();
         }
     }
 }

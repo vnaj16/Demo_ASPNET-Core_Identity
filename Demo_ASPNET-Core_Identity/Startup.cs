@@ -1,6 +1,7 @@
 using Demo_ASPNET_Core_Identity.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -30,9 +31,20 @@ namespace Demo_ASPNET_Core_Identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.SignIn.RequireConfirmedAccount = false;
+                }
+            )
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAuthentication("Login.Cookie")
+                .AddCookie("Login.Cookie",
+                options =>
+                {
+                    options.Cookie.Name = "Login.Cookie";
+                    options.LoginPath = new PathString("/Login/Index");
+                    options.AccessDeniedPath = new PathString("/Login/AccessDenied");
+                });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
