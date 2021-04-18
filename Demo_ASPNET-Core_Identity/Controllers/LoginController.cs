@@ -79,6 +79,17 @@ namespace Demo_ASPNET_Core_Identity.Controllers
             return View("Register");
         }
 
-
+        public async Task<IActionResult> LogOut(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            if (returnUrl != null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
